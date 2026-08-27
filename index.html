@@ -164,9 +164,20 @@
 
   /* ---------- CATALOGO ---------- */
   .section{padding:70px 0;}
-  .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; gap:20px; flex-wrap:wrap;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:28px; gap:20px; flex-wrap:wrap;}
   .section-head h2{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:clamp(34px,4.4vw,50px); color:var(--black);}
   .section-head p{color:#4a4a4a; max-width:44ch; font-size:14.5px; font-weight:500;}
+
+  /* category filter */
+  .cat-filters{display:flex; gap:10px; margin-bottom:32px; flex-wrap:wrap;}
+  .cat-btn{
+    background:var(--white); color:var(--black); border:2.5px solid var(--black); border-radius:0;
+    padding:9px 20px; font-weight:800; font-size:12.5px; text-transform:uppercase; letter-spacing:.05em;
+    transition:background .12s, color .12s;
+  }
+  .cat-btn:hover{background:var(--off);}
+  .cat-btn.active{background:var(--black); color:var(--white);}
+  .cat-empty{grid-column:1/-1; padding:50px 20px; text-align:center; border:3px dashed var(--black); font-weight:700; color:#5a5a5a; text-transform:uppercase; letter-spacing:.03em;}
 
   .grid{
     display:grid; grid-template-columns:repeat(3,1fr); gap:26px;
@@ -189,6 +200,7 @@
     padding:5px 12px; border-radius:0; border:2px solid var(--black);
     text-transform:uppercase; letter-spacing:.04em;
     transform:skewX(-10deg);
+    z-index:2;
   }
   .swatch{
     aspect-ratio:4/3; border-radius:0; margin-bottom:16px;
@@ -197,10 +209,11 @@
     position:relative; overflow:hidden;
     border-bottom:3px solid var(--black);
   }
-  .swatch svg{width:74%;}
+  .swatch img{width:100%; height:100%; object-fit:cover;}
   .card h3{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:19px; font-weight:400; margin-bottom:4px; letter-spacing:.01em;}
   .card .desc{font-size:12.5px; color:#5a5a5a; margin-bottom:8px; font-weight:600;}
-  .card .sku{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#8a8a8a; letter-spacing:.05em; margin-bottom:14px; text-transform:uppercase;}
+  .card .sku{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#8a8a8a; letter-spacing:.05em; margin-bottom:8px; text-transform:uppercase;}
+  .card .color-count{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--red-2); font-weight:700; margin-bottom:14px; text-transform:uppercase;}
   .price-row{display:flex; align-items:center; justify-content:space-between; margin-top:auto;}
   .price{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:var(--black);}
   .add-btn{
@@ -210,6 +223,53 @@
     box-shadow:3px 3px 0 var(--red);
   }
   .add-btn:hover{background:var(--red); border-color:var(--red); transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--black);}
+
+  /* ---------- PRODUCT MODAL ---------- */
+  .modal-product{max-width:560px;}
+  .pm-close{float:right; font-size:20px; background:none; border:none; color:var(--black); margin-bottom:6px;}
+  .gallery-main{
+    aspect-ratio:4/3; border:3px solid var(--black); background:var(--off); overflow:hidden; margin-bottom:10px;
+  }
+  .gallery-main img{width:100%; height:100%; object-fit:cover;}
+  .gallery-thumbs{display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;}
+  .gallery-thumbs img{
+    width:56px; height:56px; object-fit:cover; border:2px solid var(--line); cursor:pointer; opacity:.7; transition:opacity .12s, border-color .12s;
+  }
+  .gallery-thumbs img.active{opacity:1; border-color:var(--red);}
+  .pm-name{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:26px; font-weight:400; margin-bottom:4px;}
+  .pm-desc{font-size:13px; color:#5a5a5a; font-weight:600; margin-bottom:10px;}
+  .pm-price{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:21px; margin-bottom:20px;}
+  .pm-block{margin-bottom:20px;}
+  .pm-block>label{display:block; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px;}
+  .pm-block-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+  .pm-block-head label{font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em;}
+  .color-swatches{display:flex; gap:10px; flex-wrap:wrap;}
+  .swatch-btn{
+    display:flex; align-items:center; gap:8px;
+    border:2.5px solid var(--black); background:var(--white); padding:6px 12px 6px 6px; border-radius:0;
+    font-weight:700; font-size:12.5px; text-transform:uppercase;
+    transition:background .12s, color .12s;
+  }
+  .swatch-btn .dot{width:20px; height:20px; border:1.5px solid var(--black); flex-shrink:0;}
+  .swatch-btn.active{background:var(--black); color:var(--white);}
+  .size-grid{display:flex; gap:8px; flex-wrap:wrap;}
+  .size-btn{
+    min-width:46px; height:44px; border:2.5px solid var(--black); background:var(--white); border-radius:0;
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13.5px;
+    transition:background .12s, color .12s;
+  }
+  .size-btn.active{background:var(--red); color:var(--white); border-color:var(--red);}
+  .size-btn:hover:not(.active){background:var(--off);}
+  .size-guide-btn{
+    background:none; border:none; text-decoration:underline; font-size:11.5px; font-weight:700; color:var(--red-2);
+    text-transform:uppercase; letter-spacing:.03em;
+  }
+  .size-guide-table{margin-top:14px; border:2px solid var(--black); overflow:hidden;}
+  .size-guide-table table{width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:12px;}
+  .size-guide-table th{background:var(--black); color:var(--white); padding:8px 6px; text-transform:uppercase; letter-spacing:.03em; font-size:10.5px;}
+  .size-guide-table td{padding:7px 6px; text-align:center; border-top:1px solid var(--line);}
+  .size-guide-note{font-size:11.5px; color:#6a6a6a; font-weight:600; padding:8px 10px; border-top:2px solid var(--black); background:var(--off);}
+  .pm-status{font-size:12.5px; font-weight:700; margin-top:4px; min-height:18px; color:var(--red-2); text-transform:uppercase;}
 
   /* ---------- BENEFICIOS ---------- */
   .beneficios{background:var(--off); border-top:3px solid var(--black); border-bottom:3px solid var(--black);}
@@ -264,10 +324,11 @@
   .icon-btn{background:none; border:none; font-size:20px; color:inherit;}
   .drawer-items{flex:1; overflow-y:auto; padding:16px 22px;}
   .cart-item{display:flex; gap:12px; padding:14px 0; border-bottom:2px solid var(--line);}
-  .cart-item .thumb{width:58px; height:58px; border-radius:0; border:2px solid var(--black); background:var(--off); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
-  .cart-item .thumb svg{width:72%;}
+  .cart-item .thumb{width:58px; height:58px; border-radius:0; border:2px solid var(--black); background:var(--off); display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden;}
+  .cart-item .thumb img{width:100%; height:100%; object-fit:cover;}
   .cart-item .info{flex:1;}
   .cart-item .info .name{font-weight:800; font-size:14px; text-transform:uppercase;}
+  .cart-item .info .variant{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--red-2); font-weight:700; margin-top:2px; text-transform:uppercase;}
   .cart-item .info .meta{font-family:'JetBrains Mono',monospace; font-size:12px; color:#5a5a5a; margin-top:2px;}
   .qty-row{display:flex; align-items:center; gap:8px; margin-top:8px;}
   .qty-row button{
@@ -303,10 +364,11 @@
   .field input:focus{border-color:var(--red);}
   .field-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
   .order-summary{background:var(--off); border:2px solid var(--black); border-radius:0; padding:14px 16px; margin:18px 0; font-size:13.5px; font-weight:600;}
-  .order-summary .line{display:flex; justify-content:space-between; padding:3px 0;}
+  .order-summary .line{display:flex; justify-content:space-between; padding:3px 0; gap:10px;}
+  .order-summary .line span:first-child{color:#4a4a4a; font-size:12.5px;}
   .order-summary .total{font-weight:800; border-top:2px solid var(--black); margin-top:8px; padding-top:8px; font-family:'JetBrains Mono',monospace; text-transform:uppercase;}
   .pay-options{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
-  .pay-note{font-size:11.5px; color:#7a7a7a; margin-top:14px; line-height:1.5; font-weight:500;}
+  .pay-note{font-size:11.5px; color:#8891ab; margin-top:14px; line-height:1.5; font-weight:500;}
   .status-msg{font-size:13px; font-weight:700; margin-top:12px; padding:10px 12px; border:2px solid var(--black); border-radius:0; display:none;}
   .status-msg.ok{display:block; background:#DFF6E4; color:#0E5C24;}
   .status-msg.err{display:block; background:#FCE0E3; color:#9C0018;}
@@ -384,12 +446,8 @@
 
 <div class="strip">
   <div class="strip-track">
-    <span>ENVÍO GRATIS DESDE $250.000</span>
-    <span>CAMBIOS SIN COSTO 30 DÍAS</span>
     <span>PAGA A CUOTAS CON ADDI</span>
     <span>PAGO SEGURO CON WOMPI</span>
-    <span>ENVÍO GRATIS DESDE $250.000</span>
-    <span>CAMBIOS SIN COSTO 30 DÍAS</span>
     <span>PAGA A CUOTAS CON ADDI</span>
     <span>PAGO SEGURO CON WOMPI</span>
   </div>
@@ -400,8 +458,13 @@
     <div class="section-head">
       <div>
         <h2>Catálogo</h2>
-        <p>Selección de la casa. Todas las tallas disponibles bajo pedido — pregunta por WhatsApp si no ves la tuya.</p>
+        <p>Selección de la casa. Elige color y talla al agregar — pregunta por WhatsApp si tu talla no aparece.</p>
       </div>
+    </div>
+    <div class="cat-filters" id="catFilters">
+      <button class="cat-btn active" data-cat="todos">Todos</button>
+      <button class="cat-btn" data-cat="hombre">Hombre</button>
+      <button class="cat-btn" data-cat="mujer">Mujer</button>
     </div>
     <div class="grid" id="productGrid"></div>
   </div>
@@ -469,6 +532,51 @@
   </div>
 </div>
 
+<!-- PRODUCT MODAL (elegir color / talla) -->
+<div class="modal-overlay" id="productOverlay">
+  <div class="modal modal-product">
+    <button class="icon-btn pm-close" id="closeProduct" aria-label="Cerrar">✕</button>
+    <div class="gallery-main"><img id="galleryMainImg" src="" alt=""></div>
+    <div class="gallery-thumbs" id="galleryThumbs"></div>
+
+    <h3 class="pm-name" id="pmName"></h3>
+    <div class="pm-desc" id="pmDesc"></div>
+    <div class="pm-price" id="pmPrice"></div>
+
+    <div class="pm-block">
+      <label>Color</label>
+      <div class="color-swatches" id="pmColors"></div>
+    </div>
+
+    <div class="pm-block">
+      <div class="pm-block-head">
+        <label>Talla</label>
+        <button class="size-guide-btn" id="toggleSizeGuide">📏 Guía de tallas</button>
+      </div>
+      <div class="size-grid" id="pmSizes"></div>
+      <div class="size-guide-table" id="sizeGuideTable" hidden>
+        <table>
+          <thead><tr><th>CO / EU</th><th>US</th><th>CM</th></tr></thead>
+          <tbody>
+            <tr><td>38</td><td>6</td><td>24.0</td></tr>
+            <tr><td>39</td><td>7</td><td>24.5</td></tr>
+            <tr><td>40</td><td>7.5</td><td>25.5</td></tr>
+            <tr><td>41</td><td>8.5</td><td>26.5</td></tr>
+            <tr><td>42</td><td>9</td><td>27.0</td></tr>
+            <tr><td>43</td><td>10</td><td>27.5</td></tr>
+            <tr><td>44</td><td>10.5</td><td>28.5</td></tr>
+            <tr><td>45</td><td>11.5</td><td>29.0</td></tr>
+          </tbody>
+        </table>
+        <div class="size-guide-note">¿Entre dos tallas? Te recomendamos escoger la más grande. Escríbenos por WhatsApp si tienes dudas.</div>
+      </div>
+    </div>
+
+    <div class="pm-status" id="pmStatus"></div>
+    <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:6px;" id="pmAddBtn">Agregar al carrito</button>
+  </div>
+</div>
+
 <!-- CHECKOUT MODAL -->
 <div class="modal-overlay" id="checkoutOverlay">
   <div class="modal">
@@ -482,9 +590,8 @@
     </div>
     <div class="field-row">
       <div class="field"><label>Ciudad</label><input type="text" id="ckCity" placeholder="Ej: Bucaramanga"></div>
-      <div class="field"><label>Talla</label><input type="text" id="ckSize" placeholder="Ej: 39"></div>
+      <div class="field"><label>Dirección</label><input type="text" id="ckAddress" placeholder="Calle, número, barrio"></div>
     </div>
-    <div class="field"><label>Dirección de entrega</label><input type="text" id="ckAddress" placeholder="Calle, número, barrio"></div>
 
     <div class="order-summary" id="orderSummary"></div>
 
@@ -529,73 +636,216 @@ if (window.emailjs && CONFIG.EMAILJS_PUBLIC_KEY.indexOf('TU_') !== 0) {
 }
 
 /* =========================================================================
-   PRODUCTOS — edita, agrega o quita tenis aquí
+   PRODUCTOS — cada producto tiene colores, y cada color sus fotos reales.
+   Las rutas apuntan a la carpeta /images — mantenla junto a este archivo
+   al subir la tienda a tu hosting.
    ========================================================================= */
+const SIZES = ['38','39','40','41','42','43','44','45'];
+
 const PRODUCTS = [
-  { id:'p1', name:'Runner Sunset', desc:'Malla transpirable · suela EVA', price:239000, tag:'Nuevo', color1:'#E4002B', color2:'#0A0A0A' },
-  { id:'p2', name:'Court Classic', desc:'Cuero sintético · estilo retro', price:219000, tag:'Best seller', color1:'#A30015', color2:'#0A0A0A' },
-  { id:'p3', name:'Urban Flex', desc:'Ultraligero · uso diario', price:189000, tag:null, color1:'#0A0A0A', color2:'#E4002B' },
-  { id:'p4', name:'Trail Grip', desc:'Suela antideslizante', price:259000, tag:null, color1:'#161616', color2:'#E4002B' },
-  { id:'p5', name:'Street Low', desc:'Silueta baja · algodón', price:199000, tag:'Nuevo', color1:'#E4002B', color2:'#161616' },
-  { id:'p6', name:'Aero Knit', desc:'Tejido de punto · muy cómodo', price:249000, tag:null, color1:'#A30015', color2:'#0A0A0A' },
+  {
+    id:'af1', name:'Nike Air Force 1', desc:'Cuero charol · silueta baja', category:'hombre',
+    price:259000, tag:'Best seller',
+    colors:[
+      { id:'blanco', label:'Blanco', swatch:'#FFFFFF', photos:['images/af1-blanco-1.jpg','images/af1-blanco-2.jpg'] },
+      { id:'negro',  label:'Negro',  swatch:'#0A0A0A', photos:['images/af1-negro-1.jpg','images/af1-negro-2.jpg'] },
+    ]
+  },
+  {
+    id:'r4', name:'Jordan R4', desc:'Retro basketball · edición coleccionista', category:'hombre',
+    price:459000, tag:'Nuevo',
+    colors:[
+      { id:'morado',   label:'Morado',   swatch:'#5B4B8A', photos:['images/r4-morado-1.jpg'] },
+      { id:'turquesa', label:'Turquesa', swatch:'#7FA9A6', photos:['images/r4-turquesa-1.jpg'] },
+    ]
+  },
+  {
+    id:'vomero', name:'Nike Vomero Premium', desc:'Amortiguación Air Zoom · running', category:'hombre',
+    price:279000, tag:null,
+    colors:[
+      { id:'blanco',   label:'Blanco',   swatch:'#FFFFFF', photos:['images/vomero-blanco-1.jpg','images/vomero-blanco-2.jpg'] },
+      { id:'amarillo', label:'Amarillo', swatch:'#F5C400', photos:['images/vomero-amarillo-1.jpg'] },
+      { id:'negro',    label:'Negro',    swatch:'#0A0A0A', photos:['images/vomero-negro-1.jpg'] },
+      { id:'coral',    label:'Coral',    swatch:'#FF7A59', photos:['images/vomero-coral-1.jpg'] },
+    ]
+  },
+  {
+    id:'2000', name:'Nike 2000', desc:'Silueta burbuja · edición retro', category:'hombre',
+    price:249000, tag:'Nuevo',
+    colors:[
+      { id:'plata', label:'Plata', swatch:'#C7C9CC', photos:['images/2000-blanco-1.jpg'] },
+      { id:'negro', label:'Negro', swatch:'#0A0A0A', photos:['images/2000-negro-1.jpg','images/2000-negro-2.jpg'] },
+    ]
+  },
+  {
+    id:'yeezy', name:'Adidas Yeezy', desc:'Boost 700 · comodidad total', category:'hombre',
+    price:389000, tag:'Best seller',
+    colors:[
+      { id:'gris',       label:'Gris',       swatch:'#B9B9B4', photos:['images/yeezy-gris-1.jpg'] },
+      { id:'multicolor', label:'Multicolor', swatch:'linear-gradient(90deg,#0A0A0A 34%,#E4572E 34% 67%,#2C6E6B 67%)', photos:['images/yeezy-multicolor-1.jpg'] },
+    ]
+  },
 ];
 
-function shoeSVG(c1,c2){
-  return `<svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14 96c8-16 26-20 40-16l18 6c9 3 18 1 24-4l9-9c4-4 10-5 15-3 6 2.5 9 9 6.5 15l-4 9c-2 5-1 10 3.5 13l4.5 3c4.5 3 5.5 9 2 13-2 2.5-6 4-9.5 3.5l-10.5-2-88 2.5c-8 0-14.5-6-15-14-.4-5.5 2-10 4.5-14z" fill="${c1}"/>
-    <path d="M60 80c6 4 14 6 22 5" stroke="${c2}" stroke-width="2.5" fill="none"/>
-    <circle cx="150" cy="70" r="3" fill="${c2}"/><circle cx="160" cy="60" r="3" fill="${c2}"/><circle cx="170" cy="50" r="3" fill="${c2}"/>
-  </svg>`;
-}
-
+function findProduct(id){ return PRODUCTS.find(p=>p.id===id); }
+function findColor(product, colorId){ return product.colors.find(c=>c.id===colorId); }
 function money(n){ return '$' + n.toLocaleString('es-CO'); }
 
 /* =========================================================================
-   ESTADO DEL CARRITO (en memoria, dura mientras la pestaña esté abierta)
+   CATÁLOGO + FILTRO DE CATEGORÍA
    ========================================================================= */
-let cart = [];
+let currentCategory = 'todos';
 
 function renderProducts(){
   const grid = document.getElementById('productGrid');
-  grid.innerHTML = PRODUCTS.map(p => `
+  const list = currentCategory === 'todos' ? PRODUCTS : PRODUCTS.filter(p => p.category === currentCategory);
+
+  if (list.length === 0){
+    grid.innerHTML = `<div class="cat-empty">Todavía no tenemos tenis en esta categoría — muy pronto 👟</div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => {
+    const firstColor = p.colors[0];
+    const colorNote = p.colors.length > 1 ? `${p.colors.length} colores disponibles` : '1 color disponible';
+    return `
     <div class="card">
       ${p.tag ? `<div class="tag">${p.tag}</div>` : ''}
-      <div class="swatch">${shoeSVG(p.color1,p.color2)}</div>
+      <div class="swatch"><img src="${firstColor.photos[0]}" alt="${p.name} — ${firstColor.label}"></div>
       <h3>${p.name}</h3>
       <div class="desc">${p.desc}</div>
       <div class="sku">REF. ${p.id.toUpperCase()}</div>
+      <div class="color-count">${colorNote}</div>
       <div class="price-row">
         <span class="price">${money(p.price)}</span>
-        <button class="add-btn" onclick="addToCart('${p.id}')">Agregar</button>
+        <button class="add-btn" onclick="openProductModal('${p.id}')">Elegir talla</button>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
-function addToCart(id){
-  const existing = cart.find(i => i.id === id);
-  if (existing) existing.qty += 1;
-  else cart.push({ id, qty: 1 });
-  renderCart();
+document.getElementById('catFilters').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.cat-btn');
+  if (!btn) return;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentCategory = btn.dataset.cat;
+  renderProducts();
+});
+
+/* =========================================================================
+   MODAL DE PRODUCTO — elegir color, ver fotos y elegir talla
+   ========================================================================= */
+let pmProduct = null;
+let pmColorId = null;
+let pmSize = null;
+
+function openProductModal(productId){
+  pmProduct = findProduct(productId);
+  pmColorId = pmProduct.colors[0].id;
+  pmSize = null;
+  document.getElementById('sizeGuideTable').hidden = true;
+  renderProductModal();
+  document.getElementById('productOverlay').classList.add('show');
+}
+
+function renderProductModal(){
+  const p = pmProduct;
+  const color = findColor(p, pmColorId);
+
+  document.getElementById('pmName').textContent = p.name;
+  document.getElementById('pmDesc').textContent = `${p.desc} · Color: ${color.label}`;
+  document.getElementById('pmPrice').textContent = money(p.price);
+  document.getElementById('galleryMainImg').src = color.photos[0];
+  document.getElementById('galleryMainImg').alt = `${p.name} — ${color.label}`;
+
+  document.getElementById('galleryThumbs').innerHTML = color.photos.map((src,i)=>
+    `<img src="${src}" class="${i===0?'active':''}" onclick="setGalleryPhoto('${src}', this)" alt="Foto ${i+1} de ${p.name}">`
+  ).join('');
+
+  document.getElementById('pmColors').innerHTML = p.colors.map(c => {
+    const bg = c.swatch.startsWith('linear-gradient') ? c.swatch : c.swatch;
+    return `<button class="swatch-btn ${c.id===pmColorId?'active':''}" onclick="selectPmColor('${c.id}')">
+      <span class="dot" style="background:${bg};"></span>${c.label}
+    </button>`;
+  }).join('');
+
+  document.getElementById('pmSizes').innerHTML = SIZES.map(s =>
+    `<button class="size-btn ${s===pmSize?'active':''}" onclick="selectPmSize('${s}')">${s}</button>`
+  ).join('');
+
+  document.getElementById('pmStatus').textContent = '';
+}
+
+function setGalleryPhoto(src, thumbEl){
+  document.getElementById('galleryMainImg').src = src;
+  document.querySelectorAll('#galleryThumbs img').forEach(img=>img.classList.remove('active'));
+  thumbEl.classList.add('active');
+}
+
+function selectPmColor(colorId){
+  pmColorId = colorId;
+  renderProductModal();
+}
+
+function selectPmSize(size){
+  pmSize = size;
+  document.querySelectorAll('#pmSizes .size-btn').forEach(b=>b.classList.toggle('active', b.textContent===size));
+  document.getElementById('pmStatus').textContent = '';
+}
+
+document.getElementById('toggleSizeGuide').onclick = () => {
+  const table = document.getElementById('sizeGuideTable');
+  table.hidden = !table.hidden;
+};
+
+document.getElementById('closeProduct').onclick = () => {
+  document.getElementById('productOverlay').classList.remove('show');
+};
+
+document.getElementById('pmAddBtn').onclick = () => {
+  if (!pmSize){
+    document.getElementById('pmStatus').textContent = 'Selecciona una talla para continuar.';
+    return;
+  }
+  addToCart(pmProduct.id, pmColorId, pmSize);
+  document.getElementById('productOverlay').classList.remove('show');
   openDrawer();
+};
+
+/* =========================================================================
+   ESTADO DEL CARRITO (en memoria, dura mientras la pestaña esté abierta)
+   Cada línea es única por producto + color + talla.
+   ========================================================================= */
+let cart = [];
+
+function cartKey(id, colorId, size){ return `${id}__${colorId}__${size}`; }
+
+function addToCart(id, colorId, size){
+  const key = cartKey(id, colorId, size);
+  const existing = cart.find(i => i.key === key);
+  if (existing) existing.qty += 1;
+  else cart.push({ key, id, colorId, size, qty: 1 });
+  renderCart();
 }
 
-function changeQty(id, delta){
-  const item = cart.find(i => i.id === id);
+function changeQty(key, delta){
+  const item = cart.find(i => i.key === key);
   if (!item) return;
   item.qty += delta;
-  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+  if (item.qty <= 0) cart = cart.filter(i => i.key !== key);
   renderCart();
 }
 
-function removeItem(id){
-  cart = cart.filter(i => i.id !== id);
+function removeItem(key){
+  cart = cart.filter(i => i.key !== key);
   renderCart();
 }
 
 function cartTotal(){
   return cart.reduce((sum,i)=>{
-    const p = PRODUCTS.find(pp=>pp.id===i.id);
+    const p = findProduct(i.id);
     return sum + (p ? p.price*i.qty : 0);
   },0);
 }
@@ -609,19 +859,21 @@ function renderCart(){
     list.innerHTML = `<div class="empty-cart">Tu carrito está vacío.<br>Agrega unos tenis para empezar 👟</div>`;
   } else {
     list.innerHTML = cart.map(i=>{
-      const p = PRODUCTS.find(pp=>pp.id===i.id);
+      const p = findProduct(i.id);
+      const color = findColor(p, i.colorId);
       return `
       <div class="cart-item">
-        <div class="thumb">${shoeSVG(p.color1,p.color2)}</div>
+        <div class="thumb"><img src="${color.photos[0]}" alt="${p.name} — ${color.label}"></div>
         <div class="info">
           <div class="name">${p.name}</div>
+          <div class="variant">${color.label} · Talla ${i.size}</div>
           <div class="meta">${money(p.price)}</div>
           <div class="qty-row">
-            <button onclick="changeQty('${p.id}',-1)">−</button>
+            <button onclick="changeQty('${i.key}',-1)">−</button>
             <span>${i.qty}</span>
-            <button onclick="changeQty('${p.id}',1)">+</button>
+            <button onclick="changeQty('${i.key}',1)">+</button>
           </div>
-          <button class="remove-btn" onclick="removeItem('${p.id}')">Quitar</button>
+          <button class="remove-btn" onclick="removeItem('${i.key}')">Quitar</button>
         </div>
       </div>`;
     }).join('');
@@ -650,8 +902,9 @@ function renderOrderSummary(){
   const box = document.getElementById('orderSummary');
   if (cart.length===0){ box.innerHTML = '<div class="line">Tu carrito está vacío</div>'; return; }
   const lines = cart.map(i=>{
-    const p = PRODUCTS.find(pp=>pp.id===i.id);
-    return `<div class="line"><span>${p.name} × ${i.qty}</span><span>${money(p.price*i.qty)}</span></div>`;
+    const p = findProduct(i.id);
+    const color = findColor(p, i.colorId);
+    return `<div class="line"><span>${p.name} · ${color.label} · T.${i.size} × ${i.qty}</span><span>${money(p.price*i.qty)}</span></div>`;
   }).join('');
   box.innerHTML = lines + `<div class="line total"><span>Total</span><span>${money(cartTotal())}</span></div>`;
 }
@@ -662,7 +915,6 @@ function getBuyerData(){
     phone: document.getElementById('ckPhone').value.trim(),
     email: document.getElementById('ckEmail').value.trim(),
     city: document.getElementById('ckCity').value.trim(),
-    size: document.getElementById('ckSize').value.trim(),
     address: document.getElementById('ckAddress').value.trim(),
   };
 }
@@ -677,8 +929,9 @@ function validateBuyer(b){
 
 function orderLinesText(){
   return cart.map(i=>{
-    const p = PRODUCTS.find(pp=>pp.id===i.id);
-    return `${p.name} x${i.qty} (${money(p.price*i.qty)})`;
+    const p = findProduct(i.id);
+    const color = findColor(p, i.colorId);
+    return `${p.name} · ${color.label} · Talla ${i.size} x${i.qty} (${money(p.price*i.qty)})`;
   }).join('\n');
 }
 
@@ -730,7 +983,7 @@ document.getElementById('confirmWa').onclick = () => {
   if (!validateBuyer(buyer)) return;
   sendOrderEmails(buyer, 'Confirmación por WhatsApp');
 
-  const msg = `Hola Tenniscool! Quiero confirmar mi pedido:\n\n${orderLinesText()}\n\nTotal: ${money(cartTotal())}\n\nDatos de envío:\nNombre: ${buyer.name}\nTeléfono: ${buyer.phone}\nCiudad: ${buyer.city}\nTalla: ${buyer.size || '-'}\nDirección: ${buyer.address}`;
+  const msg = `Hola Tenniscool! Quiero confirmar mi pedido:\n\n${orderLinesText()}\n\nTotal: ${money(cartTotal())}\n\nDatos de envío:\nNombre: ${buyer.name}\nTeléfono: ${buyer.phone}\nCiudad: ${buyer.city}\nDirección: ${buyer.address}`;
   const url = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
   window.open(url, '_blank');
 };
@@ -746,7 +999,6 @@ function sendOrderEmails(buyer, method){
     customer_phone: buyer.phone,
     customer_email: buyer.email,
     customer_city: buyer.city,
-    customer_size: buyer.size,
     customer_address: buyer.address,
     order_items: orderLinesText(),
     order_total: money(cartTotal()),
