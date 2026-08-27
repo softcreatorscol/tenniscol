@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenniscool — DROP / Sneakers desde 2019</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --off:#F1F1EF;
+    --black:#0A0A0A;
+    --black-2:#161616;
+    --red:#E4002B;
+    --red-2:#A30015;
+    --line: rgba(10,10,10,.16);
+    --stripe: repeating-linear-gradient(45deg, var(--black) 0 14px, var(--red) 14px 28px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:'Archivo', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .display{font-family:'Anton', sans-serif; letter-spacing:.01em; text-transform:uppercase;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  button{font-family:inherit;cursor:pointer;}
+  :focus-visible{outline:3px solid var(--red); outline-offset:2px;}
+
+  /* ---------- SIGNATURE STRIPE BAR ---------- */
+  .lane{height:10px; background:var(--stripe);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--white);
+    border-bottom:3px solid var(--black);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand .mark{width:42px;height:42px;}
+  .brand .word{font-family:'Anton',sans-serif; font-size:26px; letter-spacing:.01em; color:var(--black); text-transform:uppercase; line-height:1;}
+  .brand .est{font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--red); letter-spacing:.08em; display:block; margin-top:2px;}
+  nav.links{display:flex; gap:30px; font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:.04em;}
+  nav.links a{text-decoration:none; position:relative; padding-bottom:4px;}
+  nav.links a::after{content:""; position:absolute; left:0; right:100%; bottom:0; height:3px; background:var(--red); transition:right .18s ease;}
+  nav.links a:hover::after{right:0;}
+  .nav-right{display:flex; align-items:center; gap:16px;}
+  .cart-btn{
+    position:relative;
+    background:var(--black); color:var(--white);
+    border:3px solid var(--black); border-radius:0;
+    width:46px; height:46px;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:4px 4px 0 var(--red);
+  }
+  .cart-btn:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--red);}
+  .cart-count{
+    position:absolute; top:-9px; right:-9px;
+    background:var(--red); color:var(--white);
+    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700;
+    width:22px; height:22px; border-radius:0;
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--white);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:56px 0 0;
+    overflow:hidden;
+    background:var(--black);
+    color:var(--white);
+  }
+  .hero .wrap{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center;
+    padding-bottom:56px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; top:-40px; left:-10%; width:120%; height:90px;
+    background:var(--stripe);
+    transform:rotate(-3deg);
+    opacity:.9;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--red); color:var(--white);
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:.08em;
+    text-transform:uppercase; margin-bottom:22px; margin-top:24px;
+    padding:6px 12px; transform:skewX(-8deg);
+  }
+  .eyebrow span{display:inline-block; transform:skewX(8deg);}
+  .hero h1{
+    font-family:'Anton',sans-serif; text-transform:uppercase;
+    font-size:clamp(46px,7.2vw,96px);
+    line-height:.9;
+    color:var(--white);
+  }
+  .hero h1 span{color:var(--red);}
+  .hero p{
+    margin-top:22px; max-width:46ch; color:#C9C9C9; font-size:16px; font-weight:500;
+  }
+  .hero-cta{display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:15px 28px; border-radius:0;
+    font-weight:800; font-size:14px; text-decoration:none; border:3px solid var(--black);
+    text-transform:uppercase; letter-spacing:.02em;
+    transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:5px 5px 0 var(--black);
+  }
+  .btn:hover{transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--black);}
+  .btn:active{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--black);}
+  .btn-primary{background:var(--red); color:var(--white); border-color:var(--white); box-shadow:5px 5px 0 var(--white);}
+  .btn-primary:hover{box-shadow:7px 7px 0 var(--white);}
+  .btn-primary:active{box-shadow:1px 1px 0 var(--white);}
+  .btn-outline{background:transparent; color:var(--black); border:3px solid var(--black);}
+  .btn-dark{background:var(--black); color:var(--white);}
+  .btn-wa{background:#25D366; color:#062712; border-color:var(--black);}
+  .btn:disabled{opacity:.5; cursor:not-allowed; transform:none; box-shadow:none;}
+
+  .hero-art{
+    position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  }
+  .hero-art .ring{
+    position:absolute; inset:6%;
+    border:3px solid var(--red); opacity:.55;
+  }
+  .hero-art .ring.b{inset:14%; border-color:var(--white); opacity:.25;}
+  .hero-art .shoe-big{width:80%; filter:drop-shadow(8px 8px 0 var(--red));}
+
+  /* ---------- STRIP (ticker) ---------- */
+  .strip{
+    background:var(--black); color:var(--white);
+    padding:14px 0; overflow:hidden;
+    border-top:3px solid var(--red); border-bottom:3px solid var(--red);
+  }
+  .strip-track{
+    display:flex; gap:44px; white-space:nowrap;
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; letter-spacing:.06em;
+    text-transform:uppercase;
+    animation:scroll 22s linear infinite;
+  }
+  .strip-track span{opacity:.92;}
+  .strip-track span::before{content:"▚ "; color:var(--red);}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion: reduce){
+    .strip-track{animation:none;}
+  }
+
+  /* ---------- CATALOGO ---------- */
+  .section{padding:70px 0;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; gap:20px; flex-wrap:wrap;}
+  .section-head h2{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:clamp(34px,4.4vw,50px); color:var(--black);}
+  .section-head p{color:#4a4a4a; max-width:44ch; font-size:14.5px; font-weight:500;}
+
+  .grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:26px;
+  }
+  .card{
+    position:relative;
+    background:var(--white);
+    border:3px solid var(--black);
+    border-radius:0;
+    padding:22px 20px 22px;
+    display:flex; flex-direction:column;
+    transition:transform .16s ease, box-shadow .16s ease;
+    box-shadow:6px 6px 0 var(--black);
+  }
+  .card:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--red);}
+  .tag{
+    position:absolute; top:-14px; left:16px;
+    background:var(--red); color:var(--white);
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700;
+    padding:5px 12px; border-radius:0; border:2px solid var(--black);
+    text-transform:uppercase; letter-spacing:.04em;
+    transform:skewX(-10deg);
+  }
+  .swatch{
+    aspect-ratio:4/3; border-radius:0; margin-bottom:16px;
+    background:var(--off);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+    border-bottom:3px solid var(--black);
+  }
+  .swatch svg{width:74%;}
+  .card h3{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:19px; font-weight:400; margin-bottom:4px; letter-spacing:.01em;}
+  .card .desc{font-size:12.5px; color:#5a5a5a; margin-bottom:8px; font-weight:600;}
+  .card .sku{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#8a8a8a; letter-spacing:.05em; margin-bottom:14px; text-transform:uppercase;}
+  .price-row{display:flex; align-items:center; justify-content:space-between; margin-top:auto;}
+  .price{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:var(--black);}
+  .add-btn{
+    background:var(--black); color:var(--white); border:2px solid var(--black); border-radius:0;
+    padding:10px 18px; font-weight:800; font-size:12.5px; text-transform:uppercase; letter-spacing:.04em;
+    transition:background .15s, transform .12s ease;
+    box-shadow:3px 3px 0 var(--red);
+  }
+  .add-btn:hover{background:var(--red); border-color:var(--red); transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--black);}
+
+  /* ---------- BENEFICIOS ---------- */
+  .beneficios{background:var(--off); border-top:3px solid var(--black); border-bottom:3px solid var(--black);}
+  .ben-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-left:3px solid var(--black);}
+  .ben{text-align:left; padding:0 22px; border-right:3px solid var(--black);}
+  .ben .ic{font-size:26px; margin-bottom:10px;}
+  .ben h4{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:15.5px; font-weight:400; margin-bottom:6px; letter-spacing:.01em;}
+  .ben p{font-size:13px; color:#4a4a4a; font-weight:500;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--black); color:#C9C9C9; padding:0 0 26px;}
+  footer .lane{margin-bottom:44px;}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:32px; margin-bottom:34px;}
+  footer .brand .word{color:var(--white);}
+  footer p{font-size:13.5px; color:#9a9a9a; max-width:38ch; margin-top:12px; font-weight:500;}
+  footer h5{font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--red); margin-bottom:14px; font-weight:700;}
+  footer ul{list-style:none; display:flex; flex-direction:column; gap:9px; font-size:14px; font-weight:600;}
+  footer ul a{text-decoration:none; color:#C9C9C9;}
+  footer ul a:hover{color:var(--red);}
+  .foot-bottom{border-top:2px solid rgba(255,255,255,.15); padding-top:20px; font-size:12px; color:#8a8a8a; font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .wa-float{
+    position:fixed; bottom:22px; right:22px; z-index:60;
+    background:#25D366; color:#062712; width:58px; height:58px; border-radius:0;
+    border:3px solid var(--black);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:5px 5px 0 var(--black); text-decoration:none;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .wa-float:hover{transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--black);}
+
+  /* ---------- CART DRAWER ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(10,10,10,.55);
+    opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:70;
+  }
+  .overlay.show{opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; right:0; height:100%; width:min(420px,92vw);
+    background:var(--white); z-index:80;
+    border-left:3px solid var(--black);
+    transform:translateX(100%); transition:transform .28s ease;
+    display:flex; flex-direction:column;
+  }
+  .drawer.show{transform:translateX(0);}
+  .drawer-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 22px; border-bottom:3px solid var(--black); background:var(--black); color:var(--white);
+  }
+  .drawer-head h3{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:24px; letter-spacing:.01em; font-weight:400;}
+  .icon-btn{background:none; border:none; font-size:20px; color:inherit;}
+  .drawer-items{flex:1; overflow-y:auto; padding:16px 22px;}
+  .cart-item{display:flex; gap:12px; padding:14px 0; border-bottom:2px solid var(--line);}
+  .cart-item .thumb{width:58px; height:58px; border-radius:0; border:2px solid var(--black); background:var(--off); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .cart-item .thumb svg{width:72%;}
+  .cart-item .info{flex:1;}
+  .cart-item .info .name{font-weight:800; font-size:14px; text-transform:uppercase;}
+  .cart-item .info .meta{font-family:'JetBrains Mono',monospace; font-size:12px; color:#5a5a5a; margin-top:2px;}
+  .qty-row{display:flex; align-items:center; gap:8px; margin-top:8px;}
+  .qty-row button{
+    width:26px; height:26px; border-radius:0; border:2px solid var(--black); background:var(--white); font-weight:800; font-size:13px; line-height:1;
+  }
+  .qty-row button:hover{background:var(--black); color:var(--white);}
+  .qty-row span{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; min-width:16px; text-align:center;}
+  .remove-btn{font-size:11px; font-weight:700; color:var(--red); background:none; border:none; text-decoration:underline; margin-top:6px; text-transform:uppercase;}
+  .empty-cart{padding:40px 10px; text-align:center; color:#8a8a8a; font-size:14px; font-weight:600;}
+  .drawer-foot{padding:20px 22px; border-top:3px solid var(--black);}
+  .subtotal-row{display:flex; justify-content:space-between; font-weight:800; margin-bottom:14px; font-size:16px; text-transform:uppercase;}
+  .subtotal-row span:last-child{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- CHECKOUT MODAL ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(10,10,10,.65);
+    display:none; align-items:center; justify-content:center; z-index:90; padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal{
+    background:var(--white); border:3px solid var(--black); border-radius:0; max-width:460px; width:100%;
+    max-height:90vh; overflow-y:auto; padding:28px;
+    box-shadow:9px 9px 0 var(--red);
+  }
+  .modal h3{font-family:'Anton',sans-serif; text-transform:uppercase; font-size:28px; margin-bottom:6px; font-weight:400;}
+  .modal .sub{font-size:13px; color:#5a5a5a; margin-bottom:20px; font-weight:600;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:11.5px; font-weight:800; margin-bottom:6px; color:var(--black); text-transform:uppercase; letter-spacing:.03em;}
+  .field input{
+    width:100%; padding:11px 13px; border:2px solid var(--black); border-radius:0;
+    font-family:inherit; font-size:14px; outline:none; font-weight:600;
+  }
+  .field input:focus{border-color:var(--red);}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .order-summary{background:var(--off); border:2px solid var(--black); border-radius:0; padding:14px 16px; margin:18px 0; font-size:13.5px; font-weight:600;}
+  .order-summary .line{display:flex; justify-content:space-between; padding:3px 0;}
+  .order-summary .total{font-weight:800; border-top:2px solid var(--black); margin-top:8px; padding-top:8px; font-family:'JetBrains Mono',monospace; text-transform:uppercase;}
+  .pay-options{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+  .pay-note{font-size:11.5px; color:#7a7a7a; margin-top:14px; line-height:1.5; font-weight:500;}
+  .status-msg{font-size:13px; font-weight:700; margin-top:12px; padding:10px 12px; border:2px solid var(--black); border-radius:0; display:none;}
+  .status-msg.ok{display:block; background:#DFF6E4; color:#0E5C24;}
+  .status-msg.err{display:block; background:#FCE0E3; color:#9C0018;}
+  #wompi-widget-holder{margin-top:4px;}
+
+  @media (max-width:820px){
+    nav.links{display:none;}
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero-art{max-width:320px; margin:0 auto;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .ben-grid{grid-template-columns:repeat(2,1fr);}
+    .ben{border-bottom:3px solid var(--black); padding-bottom:20px; margin-bottom:20px;}
+    .foot-grid{grid-template-columns:1fr; gap:26px;}
+  }
+  @media (max-width:520px){
+    .grid{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="44" height="44" fill="#0A0A0A"/>
+        <path d="M8 30c2-4 6-5 9-4l4 1.5c2 .7 4 .3 5.5-1l2-2c1-.9 2.3-1.2 3.5-.7 1.4.6 2 2.1 1.4 3.4l-1 2.2c-.5 1.1-.2 2.3.8 3l1 .7c1 .7 1.2 2 .4 3-.5.7-1.4 1-2.2.8l-2.4-.5-19.5.6c-1.8 0-3.3-1.4-3.4-3.2-.1-1.2.5-2.3 1.4-3.1z" fill="#E4002B"/>
+        <path d="M8 30c2-4 6-5 9-4l4 1.5c2 .7 4 .3 5.5-1l2-2c1-.9 2.3-1.2 3.5-.7 1.4.6 2 2.1 1.4 3.4l-1 2.2" stroke="#FFFFFF" stroke-width="1.4" fill="none"/>
+      </svg>
+      <div>
+        <div class="word">Tenniscool</div>
+        <span class="est">EST. 2019 — DROP CO.</span>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#beneficios">Por qué nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-btn" id="openCart" aria-label="Ver carrito">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow"><span>● Drop disponible ahora</span></div>
+      <h1>Pisa fuerte,<br>sin <span>sobreprecio.</span></h1>
+      <p>Tenis originales y de línea deportiva seleccionados a mano. Envíos a toda Colombia, pago seguro y la opción de pagar a cuotas cuando el bolsillo lo pida.</p>
+      <div class="hero-cta">
+        <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+        <a href="#" id="waHeroLink" class="btn btn-wa" target="_blank" rel="noopener">💬 Escríbenos</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="ring"></div>
+      <div class="ring b"></div>
+      <svg class="shoe-big" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 96c8-16 26-20 40-16l18 6c9 3 18 1 24-4l9-9c4-4 10-5 15-3 6 2.5 9 9 6.5 15l-4 9c-2 5-1 10 3.5 13l4.5 3c4.5 3 5.5 9 2 13-2 2.5-6 4-9.5 3.5l-10.5-2-88 2.5c-8 0-14.5-6-15-14-.4-5.5 2-10 4.5-14z" fill="#E4002B"/>
+        <path d="M14 96c8-16 26-20 40-16l18 6c9 3 18 1 24-4l9-9c4-4 10-5 15-3 6 2.5 9 9 6.5 15l-4 9" stroke="#FFFFFF" stroke-width="2.4" fill="none"/>
+        <path d="M60 80c6 4 14 6 22 5" stroke="#FFFFFF" stroke-width="2.4" fill="none"/>
+        <circle cx="150" cy="70" r="3.4" fill="#FFFFFF"/>
+        <circle cx="160" cy="60" r="3.4" fill="#FFFFFF"/>
+        <circle cx="170" cy="50" r="3.4" fill="#FFFFFF"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-track">
+    <span>ENVÍO GRATIS DESDE $250.000</span>
+    <span>CAMBIOS SIN COSTO 30 DÍAS</span>
+    <span>PAGA A CUOTAS CON ADDI</span>
+    <span>PAGO SEGURO CON WOMPI</span>
+    <span>ENVÍO GRATIS DESDE $250.000</span>
+    <span>CAMBIOS SIN COSTO 30 DÍAS</span>
+    <span>PAGA A CUOTAS CON ADDI</span>
+    <span>PAGO SEGURO CON WOMPI</span>
+  </div>
+</div>
+
+<section class="section" id="catalogo">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Catálogo</h2>
+        <p>Selección de la casa. Todas las tallas disponibles bajo pedido — pregunta por WhatsApp si no ves la tuya.</p>
+      </div>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section class="section beneficios" id="beneficios">
+  <div class="wrap">
+    <div class="ben-grid">
+      <div class="ben"><div class="ic">🚚</div><h4>Envíos a todo el país</h4><p>2 a 5 días hábiles según ciudad.</p></div>
+      <div class="ben"><div class="ic">🔁</div><h4>Cambios fáciles</h4><p>30 días para cambio de talla o color.</p></div>
+      <div class="ben"><div class="ic">🔒</div><h4>Pago 100% seguro</h4><p>Procesado con Wompi, cifrado de extremo a extremo.</p></div>
+      <div class="ben"><div class="ic">🧾</div><h4>Paga a cuotas</h4><p>Financia tu compra con Addi en el checkout.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="lane"></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="44" height="44" fill="#FFFFFF"/>
+            <path d="M8 30c2-4 6-5 9-4l4 1.5c2 .7 4 .3 5.5-1l2-2c1-.9 2.3-1.2 3.5-.7 1.4.6 2 2.1 1.4 3.4l-1 2.2c-.5 1.1-.2 2.3.8 3l1 .7c1 .7 1.2 2 .4 3-.5.7-1.4 1-2.2.8l-2.4-.5-19.5.6c-1.8 0-3.3-1.4-3.4-3.2-.1-1.2.5-2.3 1.4-3.1z" fill="#E4002B"/>
+          </svg>
+          <div class="word">Tenniscool</div>
+        </div>
+        <p>Sneakers y ropa deportiva. Compras y ventas minoristas desde 2019.</p>
+      </div>
+      <div>
+        <h5>Tienda</h5>
+        <ul>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#beneficios">Envíos y cambios</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="#" id="waFooterLink" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li id="phoneDisplay" class="mono" style="color:#9a9a9a;"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2019–2026 Tenniscool. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+<a href="#" id="waFloat" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.4 5L2 22l5.2-1.4c1.4.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z" fill="#25D366"/><path d="M8.5 7.5c.2-.4.5-.4.7-.4h.6c.2 0 .5 0 .7.5.3.6.9 2 1 2.1.1.2.1.4 0 .6-.1.2-.2.3-.4.5l-.5.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.2.5.1.7-.1l.6-.7c.2-.3.4-.2.7-.1l1.9.9c.2.1.4.2.5.4.1.2.1 1-.3 1.9-.4.9-2 1.6-2.9 1.6-.8 0-1.9-.1-4.7-1.6-2.9-1.6-4.7-4.7-4.9-4.9-.2-.2-1.5-2-1.5-3.9 0-1.8 1-2.7 1.3-3.1z" fill="#0B3B22"/></svg>
+</a>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>Tu carrito</h3>
+    <button class="icon-btn" id="closeCart">✕</button>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <div class="subtotal-row"><span>Subtotal</span><span id="subtotalVal">$0</span></div>
+    <button class="btn btn-primary" style="width:100%; justify-content:center;" id="goCheckout">Ir a pagar</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutOverlay">
+  <div class="modal">
+    <h3>Finalizar compra</h3>
+    <div class="sub">Necesitamos estos datos para el envío y la factura.</div>
+
+    <div class="field"><label>Nombre completo</label><input type="text" id="ckName" placeholder="Como en tu cédula"></div>
+    <div class="field-row">
+      <div class="field"><label>Teléfono</label><input type="tel" id="ckPhone" placeholder="300 000 0000"></div>
+      <div class="field"><label>Correo</label><input type="email" id="ckEmail" placeholder="tu@correo.com"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Ciudad</label><input type="text" id="ckCity" placeholder="Ej: Bucaramanga"></div>
+      <div class="field"><label>Talla</label><input type="text" id="ckSize" placeholder="Ej: 39"></div>
+    </div>
+    <div class="field"><label>Dirección de entrega</label><input type="text" id="ckAddress" placeholder="Calle, número, barrio"></div>
+
+    <div class="order-summary" id="orderSummary"></div>
+
+    <div class="pay-options">
+      <div id="wompi-widget-holder"></div>
+      <button class="btn btn-dark" style="width:100%; justify-content:center;" id="payAddi">🧾 Pagar a cuotas con Addi</button>
+      <button class="btn btn-wa" style="width:100%; justify-content:center;" id="confirmWa">💬 Confirmar pedido por WhatsApp</button>
+    </div>
+
+    <div class="status-msg" id="statusMsg"></div>
+    <div class="pay-note">Al confirmar aceptas que usemos estos datos solo para procesar tu pedido. Recibirás la confirmación por correo.</div>
+    <button class="icon-btn" id="closeCheckout" style="margin-top:10px;">← Volver al carrito</button>
+  </div>
+</div>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+/* =========================================================================
+   CONFIGURACIÓN — reemplaza estos valores con los tuyos antes de publicar
+   ========================================================================= */
+const CONFIG = {
+  WHATSAPP_NUMBER: "573000000000",      // TODO: tu número con indicativo de país, sin + ni espacios
+  WOMPI_PUBLIC_KEY: "pub_test_XXXXXXXXXXXXXXXX", // TODO: tu llave pública de Wompi (sandbox o producción)
+  WOMPI_REDIRECT_URL: window.location.origin + window.location.pathname, // a dónde vuelve el cliente tras pagar
+  ADDI_CHECKOUT_URL: "https://addi.com/", // TODO: reemplaza por tu link de checkout de Addi cuando tengas cuenta de comercio
+  EMAILJS_PUBLIC_KEY: "TU_EMAILJS_PUBLIC_KEY",     // TODO
+  EMAILJS_SERVICE_ID: "TU_EMAILJS_SERVICE_ID",     // TODO
+  EMAILJS_TEMPLATE_ADMIN: "TU_TEMPLATE_ADMIN_ID",  // TODO: plantilla que te llega a ti
+  EMAILJS_TEMPLATE_CUSTOMER: "TU_TEMPLATE_CLIENTE_ID", // TODO: plantilla de confirmación al cliente
+  ADMIN_EMAIL: "tucorreo@ejemplo.com" // TODO: a dónde te llegan las notificaciones de venta
+};
+
+document.getElementById('phoneDisplay').textContent = '+' + CONFIG.WHATSAPP_NUMBER;
+['waHeroLink','waFooterLink','waFloat'].forEach(id=>{
+  document.getElementById(id).href = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER;
+});
+
+if (window.emailjs && CONFIG.EMAILJS_PUBLIC_KEY.indexOf('TU_') !== 0) {
+  emailjs.init({ publicKey: CONFIG.EMAILJS_PUBLIC_KEY });
+}
+
+/* =========================================================================
+   PRODUCTOS — edita, agrega o quita tenis aquí
+   ========================================================================= */
+const PRODUCTS = [
+  { id:'p1', name:'Runner Sunset', desc:'Malla transpirable · suela EVA', price:239000, tag:'Nuevo', color1:'#E4002B', color2:'#0A0A0A' },
+  { id:'p2', name:'Court Classic', desc:'Cuero sintético · estilo retro', price:219000, tag:'Best seller', color1:'#A30015', color2:'#0A0A0A' },
+  { id:'p3', name:'Urban Flex', desc:'Ultraligero · uso diario', price:189000, tag:null, color1:'#0A0A0A', color2:'#E4002B' },
+  { id:'p4', name:'Trail Grip', desc:'Suela antideslizante', price:259000, tag:null, color1:'#161616', color2:'#E4002B' },
+  { id:'p5', name:'Street Low', desc:'Silueta baja · algodón', price:199000, tag:'Nuevo', color1:'#E4002B', color2:'#161616' },
+  { id:'p6', name:'Aero Knit', desc:'Tejido de punto · muy cómodo', price:249000, tag:null, color1:'#A30015', color2:'#0A0A0A' },
+];
+
+function shoeSVG(c1,c2){
+  return `<svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 96c8-16 26-20 40-16l18 6c9 3 18 1 24-4l9-9c4-4 10-5 15-3 6 2.5 9 9 6.5 15l-4 9c-2 5-1 10 3.5 13l4.5 3c4.5 3 5.5 9 2 13-2 2.5-6 4-9.5 3.5l-10.5-2-88 2.5c-8 0-14.5-6-15-14-.4-5.5 2-10 4.5-14z" fill="${c1}"/>
+    <path d="M60 80c6 4 14 6 22 5" stroke="${c2}" stroke-width="2.5" fill="none"/>
+    <circle cx="150" cy="70" r="3" fill="${c2}"/><circle cx="160" cy="60" r="3" fill="${c2}"/><circle cx="170" cy="50" r="3" fill="${c2}"/>
+  </svg>`;
+}
+
+function money(n){ return '$' + n.toLocaleString('es-CO'); }
+
+/* =========================================================================
+   ESTADO DEL CARRITO (en memoria, dura mientras la pestaña esté abierta)
+   ========================================================================= */
+let cart = [];
+
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = PRODUCTS.map(p => `
+    <div class="card">
+      ${p.tag ? `<div class="tag">${p.tag}</div>` : ''}
+      <div class="swatch">${shoeSVG(p.color1,p.color2)}</div>
+      <h3>${p.name}</h3>
+      <div class="desc">${p.desc}</div>
+      <div class="sku">REF. ${p.id.toUpperCase()}</div>
+      <div class="price-row">
+        <span class="price">${money(p.price)}</span>
+        <button class="add-btn" onclick="addToCart('${p.id}')">Agregar</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id){
+  const existing = cart.find(i => i.id === id);
+  if (existing) existing.qty += 1;
+  else cart.push({ id, qty: 1 });
+  renderCart();
+  openDrawer();
+}
+
+function changeQty(id, delta){
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+  renderCart();
+}
+
+function removeItem(id){
+  cart = cart.filter(i => i.id !== id);
+  renderCart();
+}
+
+function cartTotal(){
+  return cart.reduce((sum,i)=>{
+    const p = PRODUCTS.find(pp=>pp.id===i.id);
+    return sum + (p ? p.price*i.qty : 0);
+  },0);
+}
+
+function renderCart(){
+  const list = document.getElementById('drawerItems');
+  const count = cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent = count;
+
+  if (cart.length === 0){
+    list.innerHTML = `<div class="empty-cart">Tu carrito está vacío.<br>Agrega unos tenis para empezar 👟</div>`;
+  } else {
+    list.innerHTML = cart.map(i=>{
+      const p = PRODUCTS.find(pp=>pp.id===i.id);
+      return `
+      <div class="cart-item">
+        <div class="thumb">${shoeSVG(p.color1,p.color2)}</div>
+        <div class="info">
+          <div class="name">${p.name}</div>
+          <div class="meta">${money(p.price)}</div>
+          <div class="qty-row">
+            <button onclick="changeQty('${p.id}',-1)">−</button>
+            <span>${i.qty}</span>
+            <button onclick="changeQty('${p.id}',1)">+</button>
+          </div>
+          <button class="remove-btn" onclick="removeItem('${p.id}')">Quitar</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('subtotalVal').textContent = money(cartTotal());
+  renderOrderSummary();
+}
+
+/* ---------- Drawer open/close ---------- */
+function openDrawer(){
+  document.getElementById('drawer').classList.add('show');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show');
+}
+document.getElementById('openCart').onclick = openDrawer;
+document.getElementById('closeCart').onclick = closeDrawer;
+document.getElementById('overlay').onclick = closeDrawer;
+
+/* =========================================================================
+   CHECKOUT
+   ========================================================================= */
+function renderOrderSummary(){
+  const box = document.getElementById('orderSummary');
+  if (cart.length===0){ box.innerHTML = '<div class="line">Tu carrito está vacío</div>'; return; }
+  const lines = cart.map(i=>{
+    const p = PRODUCTS.find(pp=>pp.id===i.id);
+    return `<div class="line"><span>${p.name} × ${i.qty}</span><span>${money(p.price*i.qty)}</span></div>`;
+  }).join('');
+  box.innerHTML = lines + `<div class="line total"><span>Total</span><span>${money(cartTotal())}</span></div>`;
+}
+
+function getBuyerData(){
+  return {
+    name: document.getElementById('ckName').value.trim(),
+    phone: document.getElementById('ckPhone').value.trim(),
+    email: document.getElementById('ckEmail').value.trim(),
+    city: document.getElementById('ckCity').value.trim(),
+    size: document.getElementById('ckSize').value.trim(),
+    address: document.getElementById('ckAddress').value.trim(),
+  };
+}
+
+function validateBuyer(b){
+  if (!b.name || !b.phone || !b.city || !b.address){
+    showStatus('Completa nombre, teléfono, ciudad y dirección para continuar.', 'err');
+    return false;
+  }
+  return true;
+}
+
+function orderLinesText(){
+  return cart.map(i=>{
+    const p = PRODUCTS.find(pp=>pp.id===i.id);
+    return `${p.name} x${i.qty} (${money(p.price*i.qty)})`;
+  }).join('\n');
+}
+
+function showStatus(msg, type){
+  const el = document.getElementById('statusMsg');
+  el.textContent = msg;
+  el.className = 'status-msg ' + type;
+}
+
+document.getElementById('goCheckout').onclick = () => {
+  if (cart.length === 0){ return; }
+  closeDrawer();
+  document.getElementById('checkoutOverlay').classList.add('show');
+  buildWompiButton();
+};
+document.getElementById('closeCheckout').onclick = () => {
+  document.getElementById('checkoutOverlay').classList.remove('show');
+};
+
+/* ---------- Wompi: botón de pago (widget oficial) ---------- */
+function buildWompiButton(){
+  const holder = document.getElementById('wompi-widget-holder');
+  holder.innerHTML = ''; // limpia el botón anterior antes de recalcular el monto
+  const total = cartTotal();
+  if (total <= 0) return;
+
+  const script = document.createElement('script');
+  script.src = 'https://checkout.wompi.co/widget.js';
+  script.setAttribute('data-render', 'button');
+  script.setAttribute('data-public-key', CONFIG.WOMPI_PUBLIC_KEY);
+  script.setAttribute('data-currency', 'COP');
+  script.setAttribute('data-amount-in-cents', String(total * 100));
+  script.setAttribute('data-reference', 'tenniscool-' + Date.now());
+  script.setAttribute('data-redirect-url', CONFIG.WOMPI_REDIRECT_URL);
+  holder.appendChild(script);
+}
+
+/* ---------- Addi: redirige al checkout de financiación ---------- */
+document.getElementById('payAddi').onclick = () => {
+  const buyer = getBuyerData();
+  if (!validateBuyer(buyer)) return;
+  sendOrderEmails(buyer, 'Addi (a cuotas)');
+  window.open(CONFIG.ADDI_CHECKOUT_URL, '_blank');
+};
+
+/* ---------- WhatsApp: confirma pedido con todos los datos ---------- */
+document.getElementById('confirmWa').onclick = () => {
+  const buyer = getBuyerData();
+  if (!validateBuyer(buyer)) return;
+  sendOrderEmails(buyer, 'Confirmación por WhatsApp');
+
+  const msg = `Hola Tenniscool! Quiero confirmar mi pedido:\n\n${orderLinesText()}\n\nTotal: ${money(cartTotal())}\n\nDatos de envío:\nNombre: ${buyer.name}\nTeléfono: ${buyer.phone}\nCiudad: ${buyer.city}\nTalla: ${buyer.size || '-'}\nDirección: ${buyer.address}`;
+  const url = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+};
+
+/* ---------- EmailJS: notifica a ti y al cliente ---------- */
+function sendOrderEmails(buyer, method){
+  if (!window.emailjs || CONFIG.EMAILJS_PUBLIC_KEY.indexOf('TU_') === 0){
+    console.warn('EmailJS no está configurado todavía — revisa CONFIG en el código.');
+    return;
+  }
+  const commonParams = {
+    customer_name: buyer.name,
+    customer_phone: buyer.phone,
+    customer_email: buyer.email,
+    customer_city: buyer.city,
+    customer_size: buyer.size,
+    customer_address: buyer.address,
+    order_items: orderLinesText(),
+    order_total: money(cartTotal()),
+    payment_method: method,
+    admin_email: CONFIG.ADMIN_EMAIL
+  };
+
+  emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ADMIN, commonParams)
+    .catch(err => console.error('Error enviando correo al admin:', err));
+
+  if (buyer.email){
+    emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_CUSTOMER, commonParams)
+      .catch(err => console.error('Error enviando correo al cliente:', err));
+  }
+
+  showStatus('¡Listo! Te contactaremos pronto para coordinar el pago y el envío.', 'ok');
+}
+
+/* ---------- init ---------- */
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
